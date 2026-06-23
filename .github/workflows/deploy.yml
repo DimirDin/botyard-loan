@@ -10,4 +10,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Deploy
-        run: ./deploy.sh
+        run: |
+          rsync -a --exclude='.env' --exclude='.git' . /srv/apps/botyard-loan/
+          cd /srv/apps/botyard-loan
+          docker compose build
+          docker compose up -d
+          docker compose ps
